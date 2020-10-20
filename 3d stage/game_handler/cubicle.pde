@@ -6,11 +6,10 @@ public class BasicCube
     public float pos_x;
     public float pos_y;
     public float pos_z;
-    public float rotation_y;
+    public float rotation_y; // stage rotation
     
     // color values
     public float red;
-    public float alpha;
     
     // basic values
     public int health;

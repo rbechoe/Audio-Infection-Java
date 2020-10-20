@@ -1,6 +1,6 @@
 // basic stage data by Ravi Bechoe
 
-float x, y;
+float y;
 int rotX, rotY; // 0 is none, 1 is +, 2 is -
 
 EnemyHandler EH = new EnemyHandler();
@@ -10,15 +10,17 @@ void setup ()
 {
     size(640, 480, P3D); 
     frameRate(60);
+    
+    // init stuff
+    EH.EnemyHandlerInitializer();
 }
 
 // update
 void draw () 
 {
     canvas();
-    stageOrientation();
     calculations();
-    character();
+    stageOrientation();
 }
 
 // handles all canvas related logic
@@ -52,10 +54,11 @@ void calculations()
 void stageOrientation ()
 {
     fill(50,50,50,50);
+    character();
+    
     pushMatrix();
-    translate(width / 2, height / 2);
-    rotateX(x);
     rotateY(y);
+    translate(width, height); // <- bug in center position
     EH.EnemyHandlerLogic();
     popMatrix();
 }
@@ -63,16 +66,16 @@ void stageOrientation ()
 // the character orientation
 void character ()
 {
-    fill(0,0,150,255);
+    fill(0, 0, 150, 255);
     pushMatrix();
     translate(width / 2, height, -100);
     box(100, 200, 100);
     
     //guns
-    fill(50,50,150,255);
-    translate(75,0,-50);
+    fill(50, 50, 150, 255);
+    translate(75, 0, -50);
     box(50, 50, 200);
-    translate(-150,0,0);
+    translate(-150, 0, 0);
     box(50, 50, 200);
     popMatrix();
 }

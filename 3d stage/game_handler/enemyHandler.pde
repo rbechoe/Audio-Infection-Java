@@ -7,14 +7,21 @@ public class EnemyHandler
     float spawn_cd;
     int enemy_pool;
     
+    // the enemy initializer
+    public void EnemyHandlerInitializer() 
+    {
+        my_cubes = new ArrayList<BasicCube>();
+        spawn_cd = 0;
+    }
+    
+    // basically the update function for this class
     public void EnemyHandlerLogic()
     {
         EnemyOrientations();
-        DrawEnemies();
         
         if (spawn_cd <= 0) 
         {
-            SpawnEnemies(10);
+            SpawnEnemies(1);
             spawn_cd = 10;
         }
     }
@@ -23,11 +30,16 @@ public class EnemyHandler
     void EnemyOrientations()
     {
         // move enemies slowly towards the center
-        for (int i = 0; i < my_cubes.size(); i++) 
+        if (my_cubes.size() > 0) 
         {
-            pushMatrix();
-            my_cubes.get(i).pos_z += 0.1f;
-            popMatrix();
+            for (int i = 0; i < my_cubes.size(); i++) 
+            {
+                pushMatrix();
+                my_cubes.get(i).pos_z += 0.1f;
+                // translate and rotate functions
+                DrawEnemies(my_cubes.get(i));
+                popMatrix();
+            }
         }
     }
     
@@ -37,17 +49,20 @@ public class EnemyHandler
         // spawn enemies at Z axis -20 and rotate x degrees to have them spawn in a circular position
         for (int i = 0; i < quantity; i++)
         {
-            pushMatrix();
             BasicCube enemy = new BasicCube();
             enemy.pos_z = -20;
             enemy.rotation_y = i * 15;
-            popMatrix();
+            enemy.health = 3;
+            enemy.damage = 1;
+            enemy.red = 255;
+            my_cubes.add(enemy);
         }
     }
     
     // draw the enemies
-    void DrawEnemies () 
+    void DrawEnemies (BasicCube enemy) 
     {
-        // draw the cubes
+        fill(enemy.red, 100, 100, 50); // hp color less red = more dead
+        box(100); // enemy
     }
 }
